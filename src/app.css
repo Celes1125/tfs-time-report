@@ -1,0 +1,76 @@
+@import 'tailwindcss';
+@plugin '@tailwindcss/forms';
+@plugin '@tailwindcss/typography';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary: #3b82f6; /* blue-500 */
+  --color-secondary: #f59e0b; /* yellow-500 */
+  --color-accent: #10b981; /* green-500 */
+  --color-danger: #ef4444; /* red-500 */
+  --color-warning: #f97316; /* orange-500 */
+  --color-info: #0ea5e9; /* sky-500 */
+  --color-success: #22c55e; /* emerald-500 */
+  --color-gray-100: #f3f4f6;
+  --color-gray-200: #e5e7eb;
+  --color-gray-300: #d1d5db;
+  --color-gray-400: #9ca3af;
+  --color-gray-500: #6b7280;
+  --color-gray-600: #4b5563;
+  --color-gray-700: #374151;
+  --color-gray-800: #1f2937;
+  --color-gray-900: #111827;
+}
+
+@layer base {
+  :root {
+    --color-blue-500: #3b82f6;
+    --color-yellow-500: #f59e0b;
+    --color-red-500: #ef4444;
+    --color-green-500: #22c55e;
+    --color-black: #000000;
+    --color-white: #ffffff;
+  }
+}
+
+@layer components {
+  .bg-blue-500 {
+    background-color: var(--color-blue-500);
+  }
+  .text-white {
+    color: var(--color-white);
+  }
+  .bg-yellow-500 {
+    background-color: var(--color-yellow-500);
+  }
+  .bg-red-500 {
+    background-color: var(--color-red-500);
+  }
+  .bg-green-500 {
+    background-color: var(--color-green-500);
+  }
+  .bg-white {
+    background-color: var(--color-white);
+  }
+  .border-black {
+    border-color: var(--color-black);
+  }
+  .bg-gray-200 {
+    background-color: var(--color-gray-200);
+  }
+  .text-blue-600 {
+    color: #2563eb; /* A specific blue for links */
+  }
+  .hover\:bg-gray-100:hover {
+    background-color: var(--color-gray-100);
+  }
+  .text-red-500 {
+    color: var(--color-red-500);
+  }
+  .text-gray-700 {
+    color: var(--color-gray-700);
+  }
+}
