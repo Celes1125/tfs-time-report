@@ -26,19 +26,24 @@
     }
   }
 
-  onMount(() => {
+  onMount(async () => {
+    try {
+      const result = await getRedirectResult(auth);
+      if (result && result.user) {
+        user.set(result.user);
+        await fetchDailyEntries(result.user.uid);
+      }
+    } catch (err) {
+      console.error("Error en el resultado de la redirección:", err);
+      // Handle error, e.g., display a message to the user
+    }
+
     onAuthStateChanged(auth, async (currentUser) => {
       user.set(currentUser);
       if (currentUser) {
         await fetchDailyEntries(currentUser.uid);
       }
     });
-
-    getRedirectResult(auth)
-      .catch((err) => {
-        console.error("Error en el resultado de la redirección:", err);
-        // Handle error, e.g., display a message to the user
-      });
   });
 
   async function fetchDailyEntries(uid: string) {
