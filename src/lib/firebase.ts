@@ -6,7 +6,7 @@ import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyD81lKzzk0i7OkjQLTd8PCO5LmhoOvX6F0",
-  authDomain: window.location.hostname === "localhost" ? "localhost" : "time-report-e71fd.firebaseapp.com",
+  authDomain: window.location.hostname === "localhost" ? "localhost" : "time-report-e71fd.web.app",
   projectId: "time-report-e71fd",
   storageBucket: "time-report-e71fd.firebasestore.app",
   messagingSenderId: "391324886347",
