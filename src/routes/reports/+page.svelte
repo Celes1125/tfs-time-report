@@ -11,6 +11,7 @@
   const monthNames = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"];
 
   onMount(() => {
+    console.log("reports/+page.svelte: Page mounted.");
     auth.onAuthStateChanged(async (currentUser) => {
       user.set(currentUser);
       if (currentUser) {

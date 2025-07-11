@@ -29,6 +29,7 @@
   });
 
   onMount(() => {
+    console.log("report/+page.svelte: Page mounted.");
     auth.onAuthStateChanged(async (currentUser) => {
       user.set(currentUser);
       if (currentUser) {
