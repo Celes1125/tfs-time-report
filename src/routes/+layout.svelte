@@ -3,8 +3,6 @@
   import { page } from '$app/stores';
   import { goto } from '$app/navigation';
 
-  let { children } = $props();
-
   let startX = 0;
   let endX = 0;
   const threshold = 50; // Minimum distance for a swipe to be registered
