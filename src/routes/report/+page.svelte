@@ -219,14 +219,14 @@
       <table class="w-full border-collapse border-2 border-black mb-4 text-sm">
         <thead>
           <tr class="bg-gray-200">
-            <th class="border-2 border-black p-1 text-center">Giorno</th>
-            <th class="border-2 border-black p-1 text-center">Inizio</th>
-            <th class="border-2 border-black p-1 text-center">Fine</th>
-            <th class="border-2 border-black p-1 text-center">Tot. h. ord.</th>
-            <th class="border-2 border-black p-1 text-center">Total h. str.</th>
-            <th class="border-2 border-black p-1 text-center">Tot.</th>
-            <th class="border-2 border-black p-1 text-center">Pausa pranzo</th>
-            <th class="border-2 border-black p-1 text-center">Note</th>
+            <th class="border-2 border-black p-1 text-center w-16">Giorno</th>
+            <th class="border-2 border-black p-1 text-center w-28">Inizio</th>
+            <th class="border-2 border-black p-1 text-center w-28">Fine</th>
+            <th class="border-2 border-black p-1 text-center w-28">Tot. h. ord.</th>
+            <th class="border-2 border-black p-1 text-center w-28">Total h. str.</th>
+            <th class="border-2 border-black p-1 text-center w-28">Tot.</th>
+            <th class="border-2 border-black p-1 text-center w-24">Pausa pranzo</th>
+            <th class="border-2 border-black p-1 text-center w-48">Note</th>
           </tr>
         </thead>
         <tbody>
@@ -234,13 +234,46 @@
             {@const dayData = $reportData[`day_${day}`] || {}}
             <tr>
               <td class="border-2 border-black p-1 text-center">{day}</td>
-              <td class="border-2 border-black p-1"><input type="text" class="w-full text-center p-0.5" value={dayData.inizio || ''} on:change={(e) => updateReportData($user.uid, day, 'inizio', e.target.value)}></td>
-              <td class="border-2 border-black p-1"><input type="text" class="w-full text-center p-0.5" value={dayData.fine || ''} on:change={(e) => updateReportData($user.uid, day, 'fine', e.target.value)}></td>
+              <td class="border-2 border-black p-1">
+                <input 
+                  type="time" 
+                  class="w-full text-center p-2 text-base focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  value={dayData.inizio || ''} 
+                  on:change={(e) => updateReportData($user.uid, day, 'inizio', e.target.value)}
+                  min="00:00" 
+                  max="23:59"
+                >
+              </td>
+              <td class="border-2 border-black p-1">
+                <input 
+                  type="time" 
+                  class="w-full text-center p-2 text-base focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  value={dayData.fine || ''} 
+                  on:change={(e) => updateReportData($user.uid, day, 'fine', e.target.value)}
+                  min="00:00" 
+                  max="23:59"
+                >
+              </td>
               <td class="border-2 border-black p-1"></td>
               <td class="border-2 border-black p-1"></td>
               <td class="border-2 border-black p-1 text-center">{calculateTotalHours(dayData.inizio, dayData.fine, dayData.pausaPranzo)}</td>
-              <td class="border-2 border-black p-1"><input type="text" class="w-full text-center p-0.5" value={dayData.pausaPranzo || ''} on:change={(e) => updateReportData($user.uid, day, 'pausaPranzo', e.target.value)}></td>
-              <td class="border-2 border-black p-1"><input type="text" class="w-full text-center p-0.5" value={dayData.note || ''} on:change={(e) => updateReportData($user.uid, day, 'note', e.target.value)}></td>
+              <td class="border-2 border-black p-1">
+                <input 
+                  type="number" 
+                  class="w-full text-center p-2 text-base focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  value={dayData.pausaPranzo || ''} 
+                  on:change={(e) => updateReportData($user.uid, day, 'pausaPranzo', parseInt(e.target.value))}
+                  min="0"
+                >
+              </td>
+              <td class="border-2 border-black p-1">
+                <input 
+                  type="text" 
+                  class="w-full text-center p-2 text-base focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  value={dayData.note || ''} 
+                  on:change={(e) => updateReportData($user.uid, day, 'note', e.target.value)}
+                >
+              </td>
             </tr>
           {/each}
         </tbody>
