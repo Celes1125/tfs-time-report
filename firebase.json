@@ -1,11 +1,5 @@
 {
   "hosting": {
-    "public": "build",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
     "rewrites": [
       {
         "source": "/__/auth/handler",
@@ -13,9 +7,12 @@
       },
       {
         "source": "**",
-        "destination": "/index.html"
+        "function": "ssr"
       }
     ]
+  },
+  "functions": {
+    "source": ".svelte-kit/firebase"
   },
   "emulators": {
     "auth": {
