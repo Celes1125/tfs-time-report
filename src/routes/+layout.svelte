@@ -21,26 +21,21 @@
 
   function handleTouchStart(event: TouchEvent) {
     startX = event.touches[0].clientX;
-    console.log('Touch Start:', startX);
   }
 
   function handleTouchMove(event: TouchEvent) {
     endX = event.touches[0].clientX;
-    console.log('Touch Move:', endX);
   }
 
   function handleTouchEnd() {
     const diffX = startX - endX;
-    console.log('Touch End - diffX:', diffX);
 
     if (Math.abs(diffX) > threshold) {
       if (diffX > 0) { // Swiped left (move to next page)
-        console.log('Swiped left');
         if (currentPageIndex < pages.length - 1) {
           goto(pages[currentPageIndex + 1]);
         }
       } else { // Swiped right (move to previous page)
-        console.log('Swiped right');
         if (currentPageIndex > 0) {
           goto(pages[currentPageIndex - 1]);
         }

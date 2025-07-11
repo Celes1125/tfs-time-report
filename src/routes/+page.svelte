@@ -27,22 +27,18 @@
   }
 
   onMount(async () => {
-    console.log("onMount: Page loaded.");
     try {
       const result = await getRedirectResult(auth);
-      console.log("onMount: getRedirectResult returned:", result);
       if (result && result.user) {
         user.set(result.user);
         await fetchDailyEntries(result.user.uid);
-        console.log("onMount: User set from redirect result:", result.user.displayName);
       }
     } catch (err) {
-      console.error("onMount: Error en el resultado de la redirección:", err);
+      console.error("Error en el resultado de la redirección:", err);
       // Handle error, e.g., display a message to the user
     }
 
     onAuthStateChanged(auth, async (currentUser) => {
-      console.log("onAuthStateChanged: Current user:", currentUser ? currentUser.displayName : "null");
       user.set(currentUser);
       if (currentUser) {
         await fetchDailyEntries(currentUser.uid);
