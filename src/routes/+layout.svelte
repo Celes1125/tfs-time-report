@@ -52,7 +52,7 @@
   ontouchend={handleTouchEnd}
 >
   <main class="flex-grow p-4 w-full">
-    {@render children()}
+    <slot />
   </main>
 
   <div class="flex justify-center p-4 space-x-2 fixed bottom-0 left-0 right-0 w-full">
@@ -68,4 +68,3 @@
   /* Optional: Add smooth transitions for page changes if desired */
   /* You might need to adjust this based on how SvelteKit handles page transitions */
 </style>
-
