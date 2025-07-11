@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "build",
+    "public": ".svelte-kit/output/client",
     "rewrites": [
       {
         "source": "/__/auth/handler",
