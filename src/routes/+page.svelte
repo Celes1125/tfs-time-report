@@ -4,6 +4,7 @@
   import { writable } from 'svelte/store';
   import { onMount } from 'svelte';
   import { GoogleAuthProvider, signInWithRedirect, signOut, onAuthStateChanged, getRedirectResult } from 'firebase/auth'; // Added auth imports
+  import { goto } from '$app/navigation'; // Import goto for navigation
 
   const user = writable<any | null>(null);
   const dailyEntries = writable<any>({});
@@ -141,13 +142,15 @@
 
 {#if !$user}
   <div class="bg-white p-6 rounded-lg shadow-md text-center max-w-md mx-auto">
-    <p class="mb-4">Per favore, accedi per registrare la tua giornata.</p>
+    <p class="mb-4">Per favor, accedi per registrare la tua giornata.</p>
     <button on:click={signInWithGoogle} class="bg-blue-500 text-white p-3 rounded-lg w-full text-lg">Accedi con Google</button>
   </div>
 {:else}
   <div class="bg-white p-6 rounded-lg shadow-md max-w-md mx-auto">
-    <p class="mb-2 text-lg">Benvenuto, {$user.displayName}!</p>
-    <button on:click={handleSignOut} class="bg-red-500 text-white p-3 rounded-lg mb-4 w-full text-lg">Esci</button>
+    <div class="flex justify-between items-center mb-4">
+      <p class="text-lg">Benvenuto, {$user.displayName}!</p>
+      <button on:click={handleSignOut} class="text-red-500 hover:text-red-700 text-sm">Esci</button>
+    </div>
 
     <div class="mb-4 text-center">
       <p class="text-xl font-semibold">Data attuale: {currentDate.toLocaleDateString('it-IT', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
@@ -164,8 +167,16 @@
 
     {#if showSuccessMessage}
       <div class="mt-4 p-3 bg-green-100 text-green-800 rounded-lg text-center text-lg">
-        Fatto! Hai timbrato. Buon lavoro!
+        Fatto! Hai timbrado. Buon lavoro!
       </div>
     {/if}
+
+    <div class="mt-6 pt-4 border-t border-gray-200">
+      <h2 class="text-xl font-semibold mb-3">Navegación</h2>
+      <div class="grid grid-cols-1 gap-3">
+        <button on:click={() => goto('/report')} class="bg-green-500 text-white p-3 rounded-lg w-full text-lg hover:bg-green-600 transition-colors">Ver Reporte Diario</button>
+        <button on:click={() => goto('/reports')} class="bg-purple-500 text-white p-3 rounded-lg w-full text-lg hover:bg-purple-600 transition-colors">Ver Reportes Mensuales</button>
+      </div>
+    </div>
   </div>
 {/if}
