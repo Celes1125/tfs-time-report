@@ -81,10 +81,10 @@ Segui questi passaggi per configurare ed eseguire l'applicazione sulla tua macch
 
 ## Screenshot
 
-* ![Screenshot della Dashboard](docs/screenshots/dashboard.png)
-* ![Screenshot de 'Il mio report'](docs/screenshots/report.png)
-* ![Screenshot dello 'Storico'](docs/screenshots/storico.png)
-* [Esempio di report in PDF](docs/demoPDFreport.pdf)
+* `![Dashboard Screenshot](docs/screenshots/dashboard.png)`
+* `![Il mio report Screenshot](docs/screenshots/report.png)` 
+* `![Storico Screenshot](docs/screenshots/storico.png)`   
+* `[Il mio report pdf](docs/demoPDFreport.pdf)` 
 
 ## Autore
 
