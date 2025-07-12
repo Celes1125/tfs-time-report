@@ -156,13 +156,7 @@
     doc.save(`time-report-${monthName}-${year}.pdf`);
   }
 
-  async function shareByWhatsApp(reportId: string, reportData: any) {
-    await downloadPDF(reportId, reportData); // Trigger PDF download
-    const [year, month] = reportId.split('-').map(Number);
-    const monthName = monthNames[month - 1];
-    const text = `Ciao, ti invio il mio time report di ${monthName} ${year}. Ho allegato il PDF.`;
-    window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
-  }
+  
 </script>
 
 <h1 class="text-2xl font-bold mb-4 text-center">Archivo de Reportes</h1>
@@ -186,7 +180,6 @@
             {#if hoveredReportId === report.id}
             <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 w-full sm:w-auto">
               <button on:click={() => downloadPDF(report.id, report.data)} class="bg-blue-500 text-white text-sm p-2 rounded-lg w-full">PDF</button>
-              <button on:click={() => shareByWhatsApp(report.id, report.data)} class="bg-green-500 text-white text-sm p-2 rounded-lg w-full">WhatsApp</button>
             </div>
             {/if}
           </li>

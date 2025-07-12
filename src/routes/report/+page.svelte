@@ -203,11 +203,7 @@
     saveNote(); // Save immediately when a predefined note is selected
   }
 
-  async function shareByWhatsApp() {
-    await downloadPDF(); // This will trigger the PDF download
-    const text = `Ciao, ti invio il mio time report di ${currentMonthName}. Ho allegato il PDF.`;
-    window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
-  }
+  
 </script>
 
 <div class="container mx-auto p-4 bg-white max-w-full sm:max-w-2xl md:max-w-3xl lg:max-w-4xl xl:max-w-5xl">
@@ -321,7 +317,6 @@
 
   <div class="mt-4 flex flex-col sm:flex-row justify-center space-y-2 sm:space-y-0 sm:space-x-4">
     <button on:click={downloadPDF} class="bg-blue-500 text-white p-3 rounded-lg w-full sm:w-auto text-lg">Descargar PDF</button>
-    <button on:click={shareByWhatsApp} class="bg-green-500 text-white p-3 rounded-lg w-full sm:w-auto text-lg">Compartir por WhatsApp</button>
   </div>
 </div>
 
