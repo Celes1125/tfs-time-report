@@ -159,7 +159,7 @@
   
 </script>
 
-<h1 class="text-2xl font-bold mb-4 text-center">Archivo de Reportes</h1>
+<h1 class="text-2xl font-bold mb-4 text-center">Storico</h1>
 
 <div class="bg-white p-6 rounded-lg shadow-md max-w-md mx-auto">
   {#if $user}
@@ -175,7 +175,7 @@
             on:blur={() => hoveredReportId = null}
           >
             <a href={`/report?month=${month}&year=${year}`} class="text-blue-600 hover:underline flex-grow text-lg mb-2 sm:mb-0">
-              Reporte de {monthNames[parseInt(month) - 1]} {year}
+              Report di {monthNames[parseInt(month) - 1]} {year}
             </a>
             {#if hoveredReportId === report.id}
             <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 w-full sm:w-auto">
@@ -186,9 +186,9 @@
         {/each}
       </ul>
     {:else}
-      <p class="text-center text-lg">No tienes reportes guardados.</p>
+      <p class="text-center text-lg">Ancora non ci sono dati da visualizzare</p>
     {/if}
   {:else}
-    <p class="text-center text-red-500 text-lg">Por favor, <a href="/profile" class="underline">inicia sesión</a> para ver tus reportes.</p>
+    <p class="text-center text-red-500 text-lg">Per favore, <a href="/profile" class="underline">accedi</a> per visualizzare lo storico.</p>
   {/if}
 </div>

@@ -142,7 +142,7 @@
 
 {#if !$user}
   <div class="bg-white p-6 rounded-lg shadow-md text-center max-w-md mx-auto">
-    <p class="mb-4">Per favor, accedi per registrare la tua giornata.</p>
+    <p class="mb-4">Per favore, accedi per registrare la tua giornata.</p>
     <button on:click={signInWithGoogle} class="bg-blue-500 text-white p-3 rounded-lg w-full text-lg">Accedi con Google</button>
   </div>
 {:else}
@@ -158,7 +158,7 @@
     </div>
 
     <div class="mb-4 text-center">
-      <p class="text-xl font-semibold">Data attuale: {currentDate.toLocaleDateString('it-IT', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
+      <p class="text-xl font-semibold">{currentDate.toLocaleDateString('it-IT', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
       <p class="text-lg">Giorno: {currentDay}</p>
     </div>
 
@@ -178,8 +178,8 @@
 
     <div class="mt-6 pt-4 border-t border-gray-200">
       <div class="grid grid-cols-1 gap-3">
-        <button on:click={() => goto('/report')} class="bg-green-500 text-white p-3 rounded-lg w-full text-lg hover:bg-green-600 transition-colors">Ver Reporte Diario</button>
-        <button on:click={() => goto('/reports')} class="bg-purple-500 text-white p-3 rounded-lg w-full text-lg hover:bg-purple-600 transition-colors">Ver Reportes Mensuales</button>
+        <button on:click={() => goto('/report')} class="bg-green-500 text-white p-3 rounded-lg w-full text-lg hover:bg-green-600 transition-colors">Il mio report</button>
+        <button on:click={() => goto('/reports')} class="bg-purple-500 text-white p-3 rounded-lg w-full text-lg hover:bg-purple-600 transition-colors">Archivio</button>
       </div>
     </div>
   </div>

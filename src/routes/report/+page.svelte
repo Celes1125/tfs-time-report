@@ -316,7 +316,7 @@
   </div>
 
   <div class="mt-4 flex flex-col sm:flex-row justify-center space-y-2 sm:space-y-0 sm:space-x-4">
-    <button on:click={downloadPDF} class="bg-blue-500 text-white p-3 rounded-lg w-full sm:w-auto text-lg">Descargar PDF</button>
+    <button on:click={downloadPDF} class="bg-blue-500 text-white p-3 rounded-lg w-full sm:w-auto text-lg">Scarica PDF</button>
   </div>
 </div>
 
