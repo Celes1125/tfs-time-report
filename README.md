@@ -81,10 +81,15 @@ Follow these steps to get the application up and running on your local machine.
 
 ## Screenshots
 
-* `![Dashboard Screenshot](docs/screenshots/dashboard.png)`
-* `![Il mio report Screenshot](docs/screenshots/report.png)` 
-* `![Storico Screenshot](docs/screenshots/storico.png)`   
-* `[Il mio report pdf](docs/demoPDFreport.pdf)`  
+## Screenshots
+
+[![Dashboard Screenshot](docs/screenshots/dashboard.png)](docs/screenshots/dashboard.png)
+
+[![Il mio report Screenshot](docs/screenshots/report.png)](docs/screenshots/report.png)
+
+[![Storico Screenshot](docs/screenshots/storico.png)](docs/screenshots/storico.png)
+
+*   [Ver ejemplo de reporte en PDF](docs/demoPDFreport.pdf)
 
 ## Author
 
