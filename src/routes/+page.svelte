@@ -179,7 +179,7 @@
     <div class="mt-6 pt-4 border-t border-gray-200">
       <div class="grid grid-cols-1 gap-3">
         <button on:click={() => goto('/report')} class="bg-green-500 text-white p-3 rounded-lg w-full text-lg hover:bg-green-600 transition-colors">Il mio report</button>
-        <button on:click={() => goto('/reports')} class="bg-purple-500 text-white p-3 rounded-lg w-full text-lg hover:bg-purple-600 transition-colors">Archivio</button>
+        <button on:click={() => goto('/reports')} class="bg-purple-500 text-white p-3 rounded-lg w-full text-lg hover:bg-purple-600 transition-colors">Storico</button>
       </div>
     </div>
   </div>
