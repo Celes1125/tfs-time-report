@@ -210,50 +210,6 @@
   }
 </script>
 
-{#if showNoteModal}
-  <div class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex justify-center items-center z-50">
-    <div class="bg-white p-8 rounded-lg shadow-xl max-w-md w-full m-4">
-      <h2 class="text-xl font-bold mb-4 text-center">Modifica Nota per il Giorno {currentDayForNote}</h2>
-      
-      <div class="mb-4">
-        <label class="block text-gray-700 text-sm font-bold mb-2">Seleziona o digita una nota:</label>
-        <div class="grid grid-cols-2 gap-2 mb-4">
-          {#each predefinedNotes as note}
-            <button 
-              on:click={() => selectPredefinedNote(note)} 
-              class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-lg text-sm"
-            >
-              {note}
-            </button>
-          {/each}
-        </div>
-        <input
-          type="text"
-          bind:value={currentNoteValue}
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          placeholder="Digita la tua nota..."
-        >
-      </div>
-
-      <div class="flex justify-end space-x-4">
-        <button 
-          on:click={closeNoteModal} 
-          class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline"
-        >
-          Annulla
-        </button>
-        <button 
-          on:click={saveNote} 
-          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline"
-        >
-          Salva
-        </button>
-      </div>
-    </div>
-  </div>
-{/if}
-</script>
-
 <div class="container mx-auto p-4 bg-white max-w-full sm:max-w-2xl md:max-w-3xl lg:max-w-4xl xl:max-w-5xl">
   <div class="border-2 border-black p-4" id="report-content">
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-4">
@@ -335,12 +291,15 @@
                 >
               </td>
               <td class="border-2 border-black p-1">
-                <div 
+                <button 
+                  type="button"
                   class="w-full text-center p-2 text-base cursor-pointer hover:bg-gray-100"
                   on:click={() => openNoteModal(day, dayData.note || '')}
+                  aria-haspopup="dialog"
+                  aria-expanded={showNoteModal}
                 >
                   {dayData.note || ''}
-                </div>
+                </button>
               </td>
             </tr>
           {/each}
@@ -365,3 +324,47 @@
     <button on:click={shareByWhatsApp} class="bg-green-500 text-white p-3 rounded-lg w-full sm:w-auto text-lg">Compartir por WhatsApp</button>
   </div>
 </div>
+
+{#if showNoteModal}
+  <div class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex justify-center items-center z-50">
+    <div class="bg-white p-8 rounded-lg shadow-xl max-w-md w-full m-4">
+      <h2 class="text-xl font-bold mb-4 text-center">Modifica Nota per el Giorno {currentDayForNote}</h2>
+      
+      <div class="mb-4">
+        <label for="note-input" class="block text-gray-700 text-sm font-bold mb-2">Seleziona o digita una nota:</label>
+        <div class="grid grid-cols-2 gap-2 mb-4">
+          {#each predefinedNotes as note}
+            <button 
+              on:click={() => selectPredefinedNote(note)} 
+              class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-lg text-sm"
+            >
+              {note}
+            </button>
+          {/each}
+        </div>
+        <input
+          type="text"
+          id="note-input"
+          bind:value={currentNoteValue}
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          placeholder="Digita la tua nota..."
+        >
+      </div>
+
+      <div class="flex justify-end space-x-4">
+        <button 
+          on:click={closeNoteModal} 
+          class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline"
+        >
+          Annulla
+        </button>
+        <button 
+          on:click={saveNote} 
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline"
+        >
+          Salva
+        </button>
+      </div>
+    </div>
+  </div>
+{/if}

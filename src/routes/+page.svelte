@@ -138,7 +138,7 @@
   $: currentDayData = $dailyEntries[`day_${currentDay}`] || {};
 </script>
 
-<h1 class="text-2xl font-bold mb-4 text-center">Dashboard</h1>
+<h1 class="text-2xl font-bold mb-4 text-center">Time Report</h1>
 
 {#if !$user}
   <div class="bg-white p-6 rounded-lg shadow-md text-center max-w-md mx-auto">
