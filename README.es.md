@@ -81,15 +81,10 @@ Sigue estos pasos para configurar y ejecutar la aplicación en tu máquina local
 
 ## Capturas de Pantalla
 
-## Screenshots
-
-[![Dashboard Screenshot](docs/screenshots/dashboard.jpg)](docs/screenshots/dashboard.jpg)
-
-[![Il mio report Screenshot](docs/screenshots/report.jpg)](docs/screenshots/report.jpg)
-
-[![Storico Screenshot](docs/screenshots/storico.jpg)](docs/screenshots/storico.jpg)
-
-*   [Ver ejemplo de reporte en PDF](docs/demoPDFreport.pdf)
+*   [Dashboard](docs/screenshots/dashboard.png)
+*   ['Il mio report'](docs/screenshots/report.png)
+*   ['Storico'](docs/screenshots/storico.png)
+*   [PDF report demo](docs/demoPDFreport.pdf)
 
 ## Autor
 
