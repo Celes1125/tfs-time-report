@@ -80,16 +80,10 @@ Follow these steps to get the application up and running on your local machine.
     The static files will be generated in the `build` directory.
 
 ## Screenshots
-
-## Screenshots
-
-[![Dashboard Screenshot](docs/screenshots/dashboard.jpg)](docs/screenshots/dashboard.jpg)
-
-[![Il mio report Screenshot](docs/screenshots/report.jpg)](docs/screenshots/report.jpg)
-
-[![Storico Screenshot](docs/screenshots/storico.jpg)](docs/screenshots/storico.jpg)
-
-*   [Ver ejemplo de reporte en PDF](docs/demoPDFreport.pdf)
+*   [Dashboard](docs/screenshots/dashboard.jpg)
+*   ['Il mio report'](docs/screenshots/report.jpg)
+*   ['Storico'](docs/screenshots/storico.jpg)
+*   [PDF report demo](docs/demoPDFreport.pdf)
 
 ## Author
 
