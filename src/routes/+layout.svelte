@@ -55,13 +55,7 @@
     <slot />
   </main>
 
-  <div class="flex justify-center p-4 space-x-2 fixed bottom-0 left-0 right-0 w-full">
-    {#each pages as _, i}
-      <div
-        class="w-3 h-3 rounded-full {currentPageIndex === i ? 'bg-blue-500' : 'bg-gray-300'}"
-      ></div>
-    {/each}
-  </div>
+  
 </div>
 
 <style>

@@ -148,8 +148,13 @@
 {:else}
   <div class="bg-white p-6 rounded-lg shadow-md max-w-md mx-auto">
     <div class="flex justify-between items-center mb-4">
-      <p class="text-lg">Benvenuto, {$user.displayName}!</p>
-      <button on:click={handleSignOut} class="text-red-500 hover:text-red-700 text-sm">Esci</button>
+      <p class="text-lg">Buongiorno, {$user.displayName}!</p>
+      <button on:click={handleSignOut} class="text-red-500 hover:text-red-700 text-sm">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline-block align-middle" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+        </svg>
+        <span class="sr-only">Esci</span>
+      </button>
     </div>
 
     <div class="mb-4 text-center">
@@ -172,7 +177,6 @@
     {/if}
 
     <div class="mt-6 pt-4 border-t border-gray-200">
-      <h2 class="text-xl font-semibold mb-3">Navegación</h2>
       <div class="grid grid-cols-1 gap-3">
         <button on:click={() => goto('/report')} class="bg-green-500 text-white p-3 rounded-lg w-full text-lg hover:bg-green-600 transition-colors">Ver Reporte Diario</button>
         <button on:click={() => goto('/reports')} class="bg-purple-500 text-white p-3 rounded-lg w-full text-lg hover:bg-purple-600 transition-colors">Ver Reportes Mensuales</button>

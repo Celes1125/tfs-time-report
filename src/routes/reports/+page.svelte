@@ -9,6 +9,7 @@
   const user = writable<any | null>(null);
   const savedReports = writable<Array<{ id: string; data: any }>>([]);
   const monthNames = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"];
+  let hoveredReportId: string | null = null;
 
   onMount(() => {
     auth.onAuthStateChanged(async (currentUser) => {
@@ -155,18 +156,11 @@
     doc.save(`time-report-${monthName}-${year}.pdf`);
   }
 
-  async function shareByEmail(reportId: string, reportData: any) {
-    const [year, month] = reportId.split('-').map(Number);
-    const monthName = monthNames[month - 1];
-    const subject = `Time Report - ${$user.displayName || ''} - ${monthName} ${year}`;
-    const body = `Ciao, ti invio il mio time report di ${monthName} ${year}.\n\nSaluti,\n${$user.displayName || ''}`;
-    window.location.href = `mailto:filialegallarate@jobspa.it?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  }
-
   async function shareByWhatsApp(reportId: string, reportData: any) {
+    await downloadPDF(reportId, reportData); // Trigger PDF download
     const [year, month] = reportId.split('-').map(Number);
     const monthName = monthNames[month - 1];
-    const text = `Ciao, ti invio il mio time report di ${monthName} ${year}.`;
+    const text = `Ciao, ti invio il mio time report di ${monthName} ${year}. Ho allegato il PDF.`;
     window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
   }
 </script>
@@ -179,15 +173,22 @@
       <ul class="space-y-4">
         {#each $savedReports as report (report.id)}
           {@const [year, month] = report.id.split('-')}
-          <li class="flex flex-col sm:flex-row items-center justify-between p-3 border rounded-md">
+          <li 
+            class="flex flex-col sm:flex-row items-center justify-between p-3 border rounded-md cursor-pointer"
+            on:mouseenter={() => hoveredReportId = report.id}
+            on:mouseleave={() => hoveredReportId = null}
+            on:focus={() => hoveredReportId = report.id}
+            on:blur={() => hoveredReportId = null}
+          >
             <a href={`/report?month=${month}&year=${year}`} class="text-blue-600 hover:underline flex-grow text-lg mb-2 sm:mb-0">
               Reporte de {monthNames[parseInt(month) - 1]} {year}
             </a>
+            {#if hoveredReportId === report.id}
             <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 w-full sm:w-auto">
               <button on:click={() => downloadPDF(report.id, report.data)} class="bg-blue-500 text-white text-sm p-2 rounded-lg w-full">PDF</button>
               <button on:click={() => shareByWhatsApp(report.id, report.data)} class="bg-green-500 text-white text-sm p-2 rounded-lg w-full">WhatsApp</button>
-              <button on:click={() => shareByEmail(report.id, report.data)} class="bg-yellow-500 text-white text-sm p-2 rounded-lg w-full">Email</button>
             </div>
+            {/if}
           </li>
         {/each}
       </ul>

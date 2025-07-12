@@ -174,16 +174,84 @@
     doc.save(`time-report-${currentMonthName}-${currentYear}.pdf`);
   }
 
-  function shareByEmail() {
-    const subject = `Time Report - ${nomeCognome} - ${currentMonthName}`;
-    const body = `Ciao, ti invio il mio time report di ${currentMonthName}.\n\nSaluti,\n${nomeCognome}`;
-    window.location.href = `mailto:filialegallarate@jobspa.it?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  let showNoteModal = false;
+  let currentDayForNote: number | null = null;
+  let currentNoteValue: string = '';
+  const predefinedNotes = ["riposo", "malattia", "feria", "permesso"];
+
+  function openNoteModal(day: number, note: string) {
+    currentDayForNote = day;
+    currentNoteValue = note;
+    showNoteModal = true;
   }
 
-  function shareByWhatsApp() {
-    const text = `Ciao, ti invio il mio time report di ${currentMonthName}.`;
+  async function saveNote() {
+    if ($user && currentDayForNote !== null) {
+      await updateReportData($user.uid, currentDayForNote, 'note', currentNoteValue);
+      closeNoteModal();
+    }
+  }
+
+  function closeNoteModal() {
+    showNoteModal = false;
+    currentDayForNote = null;
+    currentNoteValue = '';
+  }
+
+  function selectPredefinedNote(note: string) {
+    currentNoteValue = note;
+    saveNote(); // Save immediately when a predefined note is selected
+  }
+
+  async function shareByWhatsApp() {
+    await downloadPDF(); // This will trigger the PDF download
+    const text = `Ciao, ti invio il mio time report di ${currentMonthName}. Ho allegato il PDF.`;
     window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
   }
+</script>
+
+{#if showNoteModal}
+  <div class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex justify-center items-center z-50">
+    <div class="bg-white p-8 rounded-lg shadow-xl max-w-md w-full m-4">
+      <h2 class="text-xl font-bold mb-4 text-center">Modifica Nota per il Giorno {currentDayForNote}</h2>
+      
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2">Seleziona o digita una nota:</label>
+        <div class="grid grid-cols-2 gap-2 mb-4">
+          {#each predefinedNotes as note}
+            <button 
+              on:click={() => selectPredefinedNote(note)} 
+              class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-lg text-sm"
+            >
+              {note}
+            </button>
+          {/each}
+        </div>
+        <input
+          type="text"
+          bind:value={currentNoteValue}
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          placeholder="Digita la tua nota..."
+        >
+      </div>
+
+      <div class="flex justify-end space-x-4">
+        <button 
+          on:click={closeNoteModal} 
+          class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline"
+        >
+          Annulla
+        </button>
+        <button 
+          on:click={saveNote} 
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline"
+        >
+          Salva
+        </button>
+      </div>
+    </div>
+  </div>
+{/if}
 </script>
 
 <div class="container mx-auto p-4 bg-white max-w-full sm:max-w-2xl md:max-w-3xl lg:max-w-4xl xl:max-w-5xl">
@@ -226,7 +294,7 @@
             <th class="border-2 border-black p-1 text-center w-28">Total h. str.</th>
             <th class="border-2 border-black p-1 text-center w-28">Tot.</th>
             <th class="border-2 border-black p-1 text-center w-24">Pausa pranzo</th>
-            <th class="border-2 border-black p-1 text-center w-48">Note</th>
+            <th class="border-2 border-black p-1 text-center w-64">Note</th>
           </tr>
         </thead>
         <tbody>
@@ -267,12 +335,12 @@
                 >
               </td>
               <td class="border-2 border-black p-1">
-                <input 
-                  type="text" 
-                  class="w-full text-center p-2 text-base focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  value={dayData.note || ''} 
-                  on:change={(e) => updateReportData($user.uid, day, 'note', e.target.value)}
+                <div 
+                  class="w-full text-center p-2 text-base cursor-pointer hover:bg-gray-100"
+                  on:click={() => openNoteModal(day, dayData.note || '')}
                 >
+                  {dayData.note || ''}
+                </div>
               </td>
             </tr>
           {/each}
@@ -295,6 +363,5 @@
   <div class="mt-4 flex flex-col sm:flex-row justify-center space-y-2 sm:space-y-0 sm:space-x-4">
     <button on:click={downloadPDF} class="bg-blue-500 text-white p-3 rounded-lg w-full sm:w-auto text-lg">Descargar PDF</button>
     <button on:click={shareByWhatsApp} class="bg-green-500 text-white p-3 rounded-lg w-full sm:w-auto text-lg">Compartir por WhatsApp</button>
-    <button on:click={shareByEmail} class="bg-yellow-500 text-white p-3 rounded-lg w-full sm:w-auto text-lg">Enviar por Email</button>
   </div>
 </div>
