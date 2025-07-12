@@ -52,7 +52,7 @@
   ontouchend={handleTouchEnd}
 >
   <main class="flex-grow p-4 w-full">
-    {@render children()}
+    <slot />
   </main>
 
   
