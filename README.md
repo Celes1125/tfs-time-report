@@ -88,4 +88,4 @@ Follow these steps to get the application up and running on your local machine.
 
 ## Author
 
-*   **Your Name** - [GitHub Profile](https://github.com/Celes1125) | [LinkedIn Profile](https://www.linkedin.com/in/celestecolautti/)
+*   **Celeste Colautti** - [GitHub Profile](https://github.com/Celes1125) | [LinkedIn Profile](https://www.linkedin.com/in/celestecolautti/)
