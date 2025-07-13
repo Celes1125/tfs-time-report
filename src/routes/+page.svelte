@@ -27,58 +27,53 @@
     }
   }
 
-  onMount(async () => {
+  onMount(() => {
     // This function will now only trigger the redirect result processing.
     // The actual user state management and whitelist check will be handled
     // by the onAuthStateChanged listener, which is more reliable.
-    try {
-      await getRedirectResult(auth);
-    } catch (err) {
+    getRedirectResult(auth).catch((err) => {
       console.error("Error processing redirect result:", err);
       alert("Se ha producido un error durante la autenticación.");
-    }
+    });
 
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser) {
-        const userEmail = currentUser.email;
+        // FIX: Ensure email is not null and normalize to lower case for consistent matching.
+        const userEmail = currentUser.email ? currentUser.email.toLowerCase() : null;
 
         if (!userEmail) {
           console.error("No se pudo obtener el email del usuario.");
           alert("Error: No se pudo obtener tu email para la verificación.");
           await signOut(auth);
-          user.set(null);
-          return;
+          return; // Exit early
         }
 
         try {
-            const allowedUserRef = doc(db, 'allowedUsers', userEmail);
-            const allowedUserSnap = await getDoc(allowedUserRef);
+          const allowedUserRef = doc(db, 'allowedUsers', userEmail);
+          const allowedUserSnap = await getDoc(allowedUserRef);
 
-            if (allowedUserSnap.exists()) {
-                // User is in the whitelist, set user and fetch data
-                user.set(currentUser);
-                await fetchDailyEntries(currentUser.uid);
-            } else {
-                // User is not in the whitelist, sign them out
-                if ($user) { // Only show alert if user was previously considered logged in
-                    alert('Acceso no autorizado. Tu cuenta no está en la lista de usuarios permitidos.');
-                }
-                await signOut(auth);
-                user.set(null);
-            }
-        } catch (dbError) {
-            console.error("Error al verificar el usuario en Firestore:", dbError);
-            alert("Se ha producido un error al verificar tus permisos. Por favor, inténtalo de nuevo.");
+          if (allowedUserSnap.exists()) {
+            // User is in the whitelist, set user and fetch data
+            user.set(currentUser);
+            await fetchDailyEntries(currentUser.uid);
+          } else {
+            // User is not in the whitelist, show alert and sign them out.
+            // FIX: Removed the faulty `if ($user)` check to ensure the alert always shows for unauthorized users.
+            alert('Acceso no autorizado. Tu cuenta no está en la lista de usuarios permitidos.');
             await signOut(auth);
-            user.set(null);
+          }
+        } catch (dbError) {
+          console.error("Error al verificar el usuario en Firestore:", dbError);
+          alert("Se ha producido un error al verificar tus permisos. Por favor, inténtalo de nuevo.");
+          await signOut(auth);
         }
       } else {
-        // User is signed out or was never in the whitelist
+        // User is signed out.
         user.set(null);
       }
     });
 
-    // It's good practice to unsubscribe from the listener when the component is destroyed
+    // Unsubscribe from the listener when the component is destroyed.
     return () => {
       unsubscribe();
     };
