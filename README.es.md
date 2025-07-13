@@ -89,7 +89,7 @@ Sigue estos pasos para configurar y ejecutar la aplicación en tu máquina local
 ## Prueba la app
 * Para evaluar la aplicación, por favor utilice las siguientes credenciales de demostración con el botón 'Accedi con Google':
     Email: demo.user.apps.celes@gmail.com
-    Contraseña: ' *demo.user.apps.celes* '
+    Contraseña: ` *demo.user.apps.celes* `
 
 ## Autor
 
