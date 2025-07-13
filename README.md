@@ -88,7 +88,7 @@ Follow these steps to get the application up and running on your local machine.
 ## Test the app
 * To evaluate the application, please use the following demo credentials with the "Accedi con Google" button:
     Email: demo.user.apps.celes@gmail.com
-    Password: '*demo.user.apps.celes*'
+    Password: ' *demo.user.apps.celes* '
 
 ## Author
 
