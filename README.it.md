@@ -86,6 +86,10 @@ Segui questi passaggi per configurare ed eseguire l'applicazione sulla tua macch
 *   ['Storico'](docs/screenshots/storico.jpg)
 *   [PDF report demo](docs/demoPDFreport.pdf)
 
+## Prueba la app
+* Per valutare l'applicazione, si prega di utilizzare le seguenti credenziali dimostrative con il pulsante "Accedi con Google":
+    Email: demo.user.apps.celes@gmail.com
+    Password: *demo.user.apps.celes*
 
 ## Autore
 

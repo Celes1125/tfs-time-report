@@ -86,7 +86,12 @@ Sigue estos pasos para configurar y ejecutar la aplicación en tu máquina local
 *   ['Storico'](docs/screenshots/storico.jpg)
 *   [PDF report demo](docs/demoPDFreport.pdf)
 
+## Prueba la app
+* Para evaluar la aplicación, por favor utilice las siguientes credenciales de demostración con el botón 'Accedi con Google':
+    Email: demo.user.apps.celes@gmail.com
+    Contraseña: *demo.user.apps.celes*
 
 ## Autor
 
 *   **Celeste Colautti** - [Perfil de GitHub](https://github.com/Celes1125) | [Perfil de LinkedIn](https://www.linkedin.com/in/celestecolautti/)
+
