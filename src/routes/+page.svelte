@@ -28,62 +28,60 @@
   }
 
   onMount(async () => {
+    // This function will now only trigger the redirect result processing.
+    // The actual user state management and whitelist check will be handled
+    // by the onAuthStateChanged listener, which is more reliable.
     try {
-      const result = await getRedirectResult(auth);
-      if (result && result.user) {
-        // This is the result from the redirect. Now, we check the whitelist.
-        const userEmail = result.user.email;
+      await getRedirectResult(auth);
+    } catch (err) {
+      console.error("Error processing redirect result:", err);
+      alert("Se ha producido un error durante la autenticación.");
+    }
+
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      if (currentUser) {
+        const userEmail = currentUser.email;
 
         if (!userEmail) {
-          console.error("No se pudo obtener el email del usuario de Google.");
+          console.error("No se pudo obtener el email del usuario.");
           alert("Error: No se pudo obtener tu email para la verificación.");
-          await signOut(auth); // Sign out just in case
+          await signOut(auth);
+          user.set(null);
           return;
         }
 
-        const allowedUserRef = doc(db, 'allowedUsers', userEmail);
-        const allowedUserSnap = await getDoc(allowedUserRef);
+        try {
+            const allowedUserRef = doc(db, 'allowedUsers', userEmail);
+            const allowedUserSnap = await getDoc(allowedUserRef);
 
-        if (!allowedUserSnap.exists()) {
-          // User is NOT in the whitelist.
-          alert('Acceso no autorizado. Tu cuenta no está en la lista de usuarios permitidos.');
-          await signOut(auth); // This will trigger onAuthStateChanged with null
-        }
-        // If the user IS in the whitelist, onAuthStateChanged will handle setting the user state.
-      }
-    } catch (err) {
-      console.error("Error en el resultado de la redirección o verificación:", err);
-      alert("Se ha producido un error durante la verificación de acceso.");
-    }
-
-    onAuthStateChanged(auth, async (currentUser) => {
-      if (currentUser) {
-        // This check ensures that if a user is removed from the whitelist,
-        // their session is terminated on the next auth state check.
-        const userEmail = currentUser.email;
-        if (!userEmail) {
-            user.set(null);
-            return;
-        }
-        const allowedUserRef = doc(db, 'allowedUsers', userEmail);
-        const allowedUserSnap = await getDoc(allowedUserRef);
-
-        if (allowedUserSnap.exists()) {
-            user.set(currentUser);
-            await fetchDailyEntries(currentUser.uid);
-        } else {
-            // User is no longer in the whitelist, sign them out.
-            if ($user) { // Only show alert if user was previously logged in
-              alert('Tu cuenta ya no tiene acceso a esta aplicación.');
+            if (allowedUserSnap.exists()) {
+                // User is in the whitelist, set user and fetch data
+                user.set(currentUser);
+                await fetchDailyEntries(currentUser.uid);
+            } else {
+                // User is not in the whitelist, sign them out
+                if ($user) { // Only show alert if user was previously considered logged in
+                    alert('Acceso no autorizado. Tu cuenta no está en la lista de usuarios permitidos.');
+                }
+                await signOut(auth);
+                user.set(null);
             }
+        } catch (dbError) {
+            console.error("Error al verificar el usuario en Firestore:", dbError);
+            alert("Se ha producido un error al verificar tus permisos. Por favor, inténtalo de nuevo.");
             await signOut(auth);
             user.set(null);
         }
       } else {
-        // User is signed out.
+        // User is signed out or was never in the whitelist
         user.set(null);
       }
     });
+
+    // It's good practice to unsubscribe from the listener when the component is destroyed
+    return () => {
+      unsubscribe();
+    };
   });
 
   async function fetchDailyEntries(uid: string) {
