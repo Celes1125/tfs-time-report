@@ -31,18 +31,57 @@
     try {
       const result = await getRedirectResult(auth);
       if (result && result.user) {
-        user.set(result.user);
-        await fetchDailyEntries(result.user.uid);
+        // This is the result from the redirect. Now, we check the whitelist.
+        const userEmail = result.user.email;
+
+        if (!userEmail) {
+          console.error("No se pudo obtener el email del usuario de Google.");
+          alert("Error: No se pudo obtener tu email para la verificación.");
+          await signOut(auth); // Sign out just in case
+          return;
+        }
+
+        const allowedUserRef = doc(db, 'allowedUsers', userEmail);
+        const allowedUserSnap = await getDoc(allowedUserRef);
+
+        if (!allowedUserSnap.exists()) {
+          // User is NOT in the whitelist.
+          alert('Acceso no autorizado. Tu cuenta no está en la lista de usuarios permitidos.');
+          await signOut(auth); // This will trigger onAuthStateChanged with null
+        }
+        // If the user IS in the whitelist, onAuthStateChanged will handle setting the user state.
       }
     } catch (err) {
-      console.error("Error en el resultado de la redirección:", err);
-      // Handle error, e.g., display a message to the user
+      console.error("Error en el resultado de la redirección o verificación:", err);
+      alert("Se ha producido un error durante la verificación de acceso.");
     }
 
     onAuthStateChanged(auth, async (currentUser) => {
-      user.set(currentUser);
       if (currentUser) {
-        await fetchDailyEntries(currentUser.uid);
+        // This check ensures that if a user is removed from the whitelist,
+        // their session is terminated on the next auth state check.
+        const userEmail = currentUser.email;
+        if (!userEmail) {
+            user.set(null);
+            return;
+        }
+        const allowedUserRef = doc(db, 'allowedUsers', userEmail);
+        const allowedUserSnap = await getDoc(allowedUserRef);
+
+        if (allowedUserSnap.exists()) {
+            user.set(currentUser);
+            await fetchDailyEntries(currentUser.uid);
+        } else {
+            // User is no longer in the whitelist, sign them out.
+            if ($user) { // Only show alert if user was previously logged in
+              alert('Tu cuenta ya no tiene acceso a esta aplicación.');
+            }
+            await signOut(auth);
+            user.set(null);
+        }
+      } else {
+        // User is signed out.
+        user.set(null);
       }
     });
   });
