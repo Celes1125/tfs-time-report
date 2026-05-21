@@ -16,33 +16,65 @@ TFS Time Report is a Progressive Web Application (PWA) designed to simplify dail
 *   Responsive user interface adaptable to mobile devices.
 *   Installable as a PWA on mobile devices.
 
-## Technologies Used
+## Despliegue y Hosting
 
-*   **Frontend:** SvelteKit, Tailwind CSS
+La aplicación se encuentra desplegada oficialmente en **Firebase Hosting**. Puedes acceder a la versión estable a través del siguiente enlace:
+
+🔗 **[https://time-report-e71fd.web.app/](https://time-report-e71fd.web.app/)**
+
+---
+
+## Tecnologías Usadas
+
+*   **Frontend:** SvelteKit, Tailwind CSS 4
 *   **Backend/Database:** Firebase (Authentication, Firestore)
-*   **PDF Generation:** jspdf, jspdf-autotable
+*   **Gestor de Dependencias:** pnpm
+*   **Generación de PDF:** jspdf, jspdf-autotable
 
-## Setup and Usage
+## Configuración y Uso
 
-Follow these steps to get the application up and running on your local machine.
+Sigue estos pasos para poner la aplicación en marcha en tu entorno local.
 
-### Prerequisites
+### Prerrequisitos
 
-*   Node.js (LTS version recommended)
-*   npm (Node Package Manager)
+*   Node.js (LTS recomendada)
+*   **pnpm** (Instalar con `npm install -g pnpm`)
 
-### Installation
+### Instalación
 
-1.  **Clone the repository:**
+1.  **Clonar el repositorio:**
     ```bash
     git clone https://github.com/Celes1125/tfs-time-report.git
     cd tfs-time-report
     ```
 
-2.  **Install dependencies:**
+2.  **Instalar dependencias:**
     ```bash
-    npm install
+    pnpm install
     ```
+
+---
+
+## Comandos Disponibles (pnpm)
+
+### Desarrollo y Compilación
+| Comando | Descripción |
+| :--- | :--- |
+| `pnpm dev` | Inicia el servidor de desarrollo local con hot-reload. |
+| `pnpm build` | Genera una compilación de producción optimizada. |
+| `pnpm preview` | Previsualiza localmente la compilación de producción. |
+| `pnpm audit` | Realiza una auditoría de seguridad de las dependencias. |
+
+### Despliegue
+Para desplegar los cambios a Firebase Hosting:
+```bash
+# 1. Compilar el proyecto
+pnpm build
+
+# 2. Desplegar a Firebase
+firebase deploy --only hosting
+```
+
 
 3.  **Firebase Configuration:**
     This application uses Firebase for authentication and data storage. You'll need to set up your own Firebase project:
